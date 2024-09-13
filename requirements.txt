@@ -6,6 +6,7 @@ dnspython
 ffmpeg-python
 gitpython
 hachoir
+httpx[http2]
 heroku3
 motor
 pillow
