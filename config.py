@@ -32,15 +32,15 @@ HEROKU_API_KEY = getenv("HEROKU_API_KEY")
 
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/KiritoxAsuna02/URUxMUSICS",
+    "https://github.com/Yashdubey213/URUxMUSICS",
 )
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
 GIT_TOKEN = getenv(
     "GIT_TOKEN", None
 )  # Fill this variable if your upstream repository is private
 
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/botzz_x_hub")
-SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/darkyxsupport")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/TALK_2_REL4TE")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/riotheowner")
 
 # Set this to True if you want the assistant to automatically leave chats after an interval
 AUTO_LEAVING_ASSISTANT = bool(getenv("AUTO_LEAVING_ASSISTANT", True))
@@ -62,8 +62,8 @@ TG_VIDEO_FILESIZE_LIMIT = int(getenv("TG_VIDEO_FILESIZE_LIMIT", 1073741824))
 
 
 # Get your pyrogram v2 session from @StringFatherBot on Telegram
-STRING1 = getenv("STRING_SESSION", None)
-STRING2 = getenv("STRING_SESSION2", None)
+STRING1 = getenv("BQF_beUAL7PaeaEc2A5mHGwA8Kwje6FmabLjP2dyXqwr-1wDue7og8zWvkWqQxhFoNXv4M2s6o7gh_zYCMVV8nIJYo4BUL7ytaVB_Pp0disc_4GtrmexTfwTiL23uc_6RPqjtpprlY6oWHwKOniyMGHZ2uxPWjGFt3guqqobkIN7P_cNR_x_Z6HfA5mAfWKMPL63V1MoPcbR9XM8H2ykQuBFoAgnUQjz0BV5Dnmesk3AJ2Om7A3jzXMvzSglMxMoj1qSUfFmf1IpfmkPUUEhXIhuKlhMsa0yNahnYG5SG6ngROQliBaYz-_F8OeDWPM8L_m5TMkCwn5puHBSHuk6LoxHGQhnnQAAAAFwKuYcAA", None)
+STRING2 = getenv("BQF1_JUAGAZazfPaFfOffrvxpGA9vAThDBMG4l9ywQUlLLQa5mgXUobdQfNumdGc3XDRoO7LeGl7LBQK4zz2buJFL9JwKEQBDPbzGmI95rhjCYDzq0fV0yuvcQg4zyv7OlvsVfu1D4B9nrCnOdjp5SvZgVT9U8_J08DH3I0upX-JCoj4Qk47pw0cKFKmrW3pls26UBlrCC43haa0SvWLnbWgctKovetlhF_nr_ZJ7VbSlSAuD-j3Gur7KyqhGCWxOsGn6qESYfdXkWCuROGnlYvyY7ZIFsWwenIh6hz_WvQTzILgWLa4S6ixw94I6-nBXtbcAj1Rvl-iREb37RnMsFrLFqlgAAAAGlC9VZAA", None)
 STRING3 = getenv("STRING_SESSION3", None)
 STRING4 = getenv("STRING_SESSION4", None)
 STRING5 = getenv("STRING_SESSION5", None)
