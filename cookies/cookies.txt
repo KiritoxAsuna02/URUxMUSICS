@@ -1,4 +1,4 @@
-#  Netscape HTTP Cookie File
+# Netscape HTTP Cookie File
 # This is a generated file! Do not edit.
 
 # domain  include_subdomains  path  secure  expiration_date  name  value
