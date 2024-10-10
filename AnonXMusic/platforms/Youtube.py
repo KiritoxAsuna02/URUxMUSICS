@@ -15,7 +15,7 @@ from AnonXMusic.utils.database import is_on_off
 
 
 def cookies():
-    cookie_dir = "SONALI/utils/cookies"
+    cookie_dir = "cookies"
     cookies_files = [f for f in os.listdir(cookie_dir) if f.endswith(".txt")]
 
     cookie_file = os.path.join(cookie_dir, random.choice(cookies_files))
@@ -37,45 +37,6 @@ async def shell_cmd(cmd):
     return out.decode("utf-8")
 
 
-async def download_a(videoid, video: bool = False):
-    url = f"https://invidious.jing.rocks/api/v1/videos/{videoid}"
-
-    async with httpx.AsyncClient(http2=True) as client:
-        response = await client.get(url)
-
-    response_data = response.json()
-    formats = response_data.get("adaptiveFormats", [])
-
-    download_url = None
-    path = None
-
-    if video:
-        path = os.path.join("downloads", f"{videoid}.mp4")
-        formats = response_data.get("formatStreams", [])
-        for fmt in formats:
-            download_url = fmt.get("url")
-            if download_url:
-                break
-    else:
-        path = os.path.join("downloads", f"{videoid}.m4a")
-        for fmt in formats:
-            if fmt.get("audioQuality") == "AUDIO_QUALITY_MEDIUM":
-                download_url = fmt.get("url")
-                if download_url:
-                    break
-
-    if not download_url:
-        raise ValueError("No suitable format found")
-
-    command = f'yt-dlp -o "{path}" "{download_url}"'
-    await shell_cmd(command)
-
-    if os.path.isfile(path):
-        return path
-    else:
-        raise Exception(f"Download failed for video: {videoid}")
-
-
 async def api_download(vidid, video=False):
     API = "https://api.cobalt.tools/api/json"
     headers = {
@@ -95,34 +56,17 @@ async def api_download(vidid, video=False):
             "aFormat": "opus",
         }
 
-    try:
-        async with httpx.AsyncClient(http2=True) as client:
-            response = await client.post(API, headers=headers, json=data)
-            response.raise_for_status()
-            results = response.json().get("url")
-            if not results:
-                raise ValueError("No download URL found in the response")
+    async with httpx.AsyncClient(http2=True) as client:
+        response = await client.post(API, headers=headers, json=data)
+        response.raise_for_status()
+        results = response.json()["url"]
 
-            cmd = f"yt-dlp '{results}' -o '{path}'"
-            await shell_cmd(cmd)
-
-            if os.path.isfile(path):
-                return path
-            else:
-                raise DownloadError("Download failed")
-
-    except (httpx.RequestError, httpx.HTTPStatusError, ValueError) as e:
-        raise DownloadError(f"Download failed due to an API error: {str(e)}")
-
-
-async def download(videoid, video=False):
-    try:
-        path = await api_download(videoid, video)
+    cmd = f"yt-dlp '{results}' -o '{path}'"
+    await shell_cmd(cmd)
+    if os.path.isfile(path):
         return path
-    except Exception as e:
-
-        path = await api_download(videoid, video)
-        return path
+    else:
+        return None
 
 
 class YouTubeAPI:
@@ -422,25 +366,16 @@ class YouTubeAPI:
             x.download([link])
 
         if songvideo:
-            # await loop.run_in_executor(None, song_video_dl)
-            # fpath = f"downloads/{title}.mp4"
-            fpath = await loop.run_in_executor(
-                None, lambda: asyncio.run(download(vidid, video=True))
-            )
+            await loop.run_in_executor(None, song_video_dl)
+            fpath = f"downloads/{title}.mp4"
+            
             return fpath
         elif songaudio:
-            # await loop.run_in_executor(None, song_audio_dl)
-            # fpath = f"downloads/{title}.mp3"
-            fpath = await loop.run_in_executor(
-                None, lambda: asyncio.run(download(vidid))
-            )
+            await loop.run_in_executor(None, song_audio_dl)
+            fpath = f"downloads/{title}.mp3"
             return fpath
         elif video:
-            direct = True
-            downloaded_file = await loop.run_in_executor(
-                None, lambda: asyncio.run(download(vidid, video=True))
-            )
-            """if await is_on_off(config.YTDOWNLOADER):
+            if await is_on_off(2):
                 direct = True
                 downloaded_file = await loop.run_in_executor(None, video_dl)
             else:
@@ -458,11 +393,8 @@ class YouTubeAPI:
                     downloaded_file = stdout.decode().split("\n")[0]
                     direct = None
                 else:
-                    return"""
+                    return
         else:
             direct = True
-            # downloaded_file = await loop.run_in_executor(None, audio_dl)
-            downloaded_file = await loop.run_in_executor(
-                None, lambda: asyncio.run(download(vidid))
-            )
+            downloaded_file = await loop.run_in_executor(None, audio_dl)
         return downloaded_file, direct
