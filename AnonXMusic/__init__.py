@@ -6,26 +6,12 @@ from AnonXMusic.misc import dbb, heroku
 
 from .logging import LOGGER
 
-# Bot Client
-
-# Directories
 dirr()
-
-# Check Git Updates
 git()
-
-# Initialize Memory DB
 dbb()
-
-# Heroku APP
 heroku()
 
-# Load Sudo Users from DB
-sudo()
-
-app = ERABot()
-
-# Assistant Client
+app = Anony()
 userbot = Userbot()
 
 from .platforms import *
