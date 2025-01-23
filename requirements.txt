@@ -6,8 +6,8 @@ dnspython
 ffmpeg-python
 gitpython
 hachoir
-httpx[http2]
 heroku3
+httpx==0.27.2
 motor
 pillow
 psutil
